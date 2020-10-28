@@ -959,7 +959,7 @@ end:
     }
 }
 
-void donlist(char *arg, const int on_ctrl_conn, const int opt_l_,
+void donlst(char *arg, const int on_ctrl_conn, const int opt_l_,
              const int opt_a_, const int split_args, const int prefix_path)
 {
     int c;
