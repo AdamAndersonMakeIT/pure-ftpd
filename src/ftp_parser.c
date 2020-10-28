@@ -625,7 +625,7 @@ void parser(void)
                 } else
 #endif
                 {
-                    donlst(arg);
+                    donlst(arg, 0, 0, 0, broken_client_compat, 1);
                 }
 #ifndef MINIMAL
             } else if (!strcmp(cmd, "mfmt")) {
