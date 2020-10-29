@@ -962,7 +962,6 @@ void donlst(char *arg)
 {
     const int opt_l_ = 0;
     const int opt_a_ = 0;
-    const int split_args = 0;
     const int prefix_path = 1;
     int c;
     void *tls_fd = NULL;
@@ -975,54 +974,6 @@ void donlst(char *arg)
         opt_a = 1;
     } else {
         opt_a = opt_a_;
-    }
-    if (split_args != 0 && arg != NULL) {
-        while (isspace((unsigned char) *arg)) {
-            arg++;
-        }
-        while (*arg == '-') {
-            while (arg++ && isalnum((unsigned char) *arg)) {
-                switch (*arg) {
-                case 'a':
-                    opt_a = 1;
-                    break;
-                case 'l':
-                    opt_l = 1;
-                    opt_C = 0;
-                    break;
-                case '1':
-                    opt_l = opt_C = 0;
-                    break;
-                case 'C':
-                    opt_l = 0;
-                    opt_C = 1;
-                    break;
-                case 'F':
-                    opt_F = 1;
-                    break;
-                case 'R':
-                    opt_R = 1;
-                    break;
-                case 'd':
-                    opt_d = 1;
-                    break;
-                case 'r':
-                    opt_r = 1;
-                    break;
-                case 't':
-                    opt_t = 1;
-                    opt_S = 0;
-                    break;
-                case 'S':
-                    opt_S = 1;
-                    opt_t = 0;
-                    break;
-                }
-            }
-            while (isspace((unsigned char) *arg)) {
-                arg++;
-            }
-        }
     }
     if (on_ctrl_conn == 0) {
         opendata();
@@ -1057,11 +1008,7 @@ void donlst(char *arg)
             glob_t g;
             int a;
             char *endarg;
-            if (split_args == 0) {
-                endarg = NULL;
-            } else if ((endarg = unescape_and_return_next_file(arg)) != NULL) {
-                justone = 0;
-            }
+            endarg = NULL;
             /* Expand ~ here if needed */
             alarm(GLOB_TIMEOUT);
             memset(&g, 0, sizeof g);
