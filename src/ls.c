@@ -960,7 +960,6 @@ end:
 
 void donlst(char *arg)
 {
-    const int opt_a_ = 0;
     const int prefix_path = 1;
     int c;
     void *tls_fd = NULL;
@@ -972,7 +971,7 @@ void donlst(char *arg)
     if (force_ls_a != 0) {
         opt_a = 1;
     } else {
-        opt_a = opt_a_;
+        opt_a = 0;
     }
     if (on_ctrl_conn == 0) {
         opendata();
