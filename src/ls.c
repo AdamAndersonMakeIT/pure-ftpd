@@ -960,7 +960,6 @@ end:
 
 void donlst(char *arg)
 {
-    const int opt_l_ = 0;
     const int opt_a_ = 0;
     const int prefix_path = 1;
     int c;
@@ -969,7 +968,7 @@ void donlst(char *arg)
     matches = 0U;
     const int on_ctrl_conn = 0;
     opt_C = opt_d = opt_F = opt_R = opt_r = opt_t = opt_S = 0;
-    opt_l = opt_l_;
+    opt_l = 0;
     if (force_ls_a != 0) {
         opt_a = 1;
     } else {
