@@ -964,7 +964,6 @@ void donlst(char *arg)
     void *tls_fd = NULL;
     char *c_buf;
     matches = 0U;
-    const int on_ctrl_conn = 0;
     opt_C = opt_d = opt_F = opt_R = opt_r = opt_t = opt_S = 0;
     opt_l = 0;
     if (force_ls_a != 0) {
@@ -972,32 +971,17 @@ void donlst(char *arg)
     } else {
         opt_a = 0;
     }
-    if (on_ctrl_conn == 0) {
-        opendata();
-        if ((c = xferfd) == -1) {
-            return;
-        }
-        doreply();
-#ifdef WITH_TLS
-        if (data_protection_level == CPL_PRIVATE) {
-            tls_init_data_session(xferfd, passive);
-            tls_fd = tls_data_cnx;
-        }
-#endif
-    } else {                           /* STAT command */
-        c = clientfd;
-#ifdef WITH_TLS
-        if (tls_cnx != NULL) {
-            secure_safe_write(tls_cnx, "213-STAT" CRLF,
-                              sizeof "213-STAT" CRLF - 1U);
-            tls_fd = tls_cnx;
-        }
-        else
-#endif
-        {
-            safe_write(c, "213-STAT" CRLF, sizeof "213-STAT" CRLF - 1U, -1);
-        }
+    opendata();
+    if ((c = xferfd) == -1) {
+        return;
     }
+    doreply();
+#ifdef WITH_TLS
+    if (data_protection_level == CPL_PRIVATE) {
+        tls_init_data_session(xferfd, passive);
+        tls_fd = tls_data_cnx;
+    }
+#endif
     if (arg != NULL && *arg != 0) {
         int justone;
         justone = 1;            /* just one argument, so don't print dir name */
@@ -1093,15 +1077,10 @@ void donlst(char *arg)
         outputfiles(c, tls_fd);
     }
     wrstr(c, tls_fd, NULL);
-    if (on_ctrl_conn == 0) {
 #ifdef WITH_TLS
-        closedata();
+    closedata();
 #endif
-        close(c);
-    } else {
-        addreply_noformat(213, "End.");
-        goto end;
-    }
+    close(c);
     if (opt_a || opt_C || opt_d || opt_F || opt_l || opt_r || opt_R ||
         opt_t || opt_S)
         addreply(0, "Options: %s%s%s%s%s%s%s%s%s",
