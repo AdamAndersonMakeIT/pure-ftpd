@@ -365,7 +365,7 @@ int ul_check_free_space(const char *name, const double min_space);
 void disablesignals(void);
 void getnames(void);
 void dolist(char *arg, const int on_ctrlconn);
-void donlst(const char *base);
+void donlst(char *arg);
 void opendata(void);
 void closedata(void);
 void client_fflush(void);
