@@ -960,7 +960,6 @@ end:
 
 void donlst(char *arg)
 {
-    const int prefix_path = 1;
     int c;
     void *tls_fd = NULL;
     char *c_buf;
